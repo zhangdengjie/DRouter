@@ -1,6 +1,7 @@
 package com.didi.drouter.generator;
 
 import com.didi.drouter.plugin.RouterSetting;
+import com.didi.drouter.utils.Logger;
 import com.didi.drouter.utils.StoreUtil;
 import com.didi.drouter.utils.TextUtil;
 
@@ -171,7 +172,7 @@ abstract class AbsRouterCollect {
                 ct = ct.getSuperclass();
             }
         } catch (NotFoundException e) {
-            // ignore
+            Logger.e(e);
         }
         return false;
     }

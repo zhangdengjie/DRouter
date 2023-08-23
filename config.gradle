@@ -1,0 +1,17 @@
+/**
+ * 模块独立配置
+ * 放在对应module下，module/build.gradle中引入，注意放在maven_push之前
+ * apply from: "config.gradle"
+ * apply from: "../maven_push.gradle"
+ */
+
+ext {
+    //maven GroupId
+    mavenGroupId = "com.zdj.plugin"
+    //maven ArtifactId
+    mavenArtifactId = "router"
+    //maven 发布版本号
+    mavenPath = "$buildDir/libs/drouter-plugin.jar"
+    //maven 本地aar路径
+    mavenVersion = "0.0.1-SNAPSHOT"
+}

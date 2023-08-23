@@ -36,3 +36,4 @@ proguard/
 /bugly
 /.aar
 /host
+/plugin_component
