@@ -1,0 +1,17 @@
+/**
+ * 模块独立配置
+ * 放在对应module下，module/build.gradle中引入，注意放在maven_push之前
+ * apply from: "config.gradle"
+ * apply from: "../maven_push.gradle"
+ */
+
+ext {
+    //maven GroupId
+    mavenGroupId = "com.didi.drouter"
+    //maven ArtifactId
+    mavenArtifactId = "plugin"
+    //maven 本地产物路径
+    mavenPath = "${layout.buildDirectory.get().asFile.path}/libs/${project.name}-${project.version}.jar"
+    //maven 发布版本号
+    mavenVersion = "0.0.1-SNAPSHOT"
+}

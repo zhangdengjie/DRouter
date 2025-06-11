@@ -29,11 +29,15 @@ version = '1.4.0'
 
 jar {
     manifest {
+        // 检测是否大于1.3.3版本,否则编译不通过
+        // Please first make sure plugin-version null(current) >= 1.3.3(min support)
         attributes("plugin-version" : version)
     }
 }
 
-if (file("${rootProject.projectDir}/upload-maven.gradle").exists()) {
-    apply from: "${rootProject.projectDir}/upload-maven.gradle"
-}
+apply from: "./config.gradle"
+apply from: "../maven_push.gradle"
 
+tasks.getByName("publishPluginPublicationToPluginRepository").dependsOn("jar")
+tasks.getByName("publishAllPublicationsToPluginRepository").dependsOn("jar")
+tasks.getByName("publishPluginPublicationToMavenLocal").dependsOn("jar")

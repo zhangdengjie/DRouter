@@ -1,0 +1,46 @@
+apply plugin: 'maven-publish'
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+publishing {
+
+    publications {
+        plugin(MavenPublication) {
+            groupId = project.ext.mavenGroupId
+            artifactId = project.ext.mavenArtifactId
+            version = project.ext.mavenVersion
+            artifact project.ext.mavenPath
+        }
+
+        all {
+            pom.withXml {
+                def compiles = [configurations.implementation]
+                def dependenciesNode = asNode().appendNode('dependencies')
+                compiles.each {
+                    it.allDependencies.each { dependency ->
+                        //通过本地引用的不要打进去
+                        if (dependency.name != "unspecified") {
+                            println(">>>>" + dependency.name)
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', dependency.group)
+                            dependencyNode.appendNode('artifactId', dependency.name)
+                            dependencyNode.appendNode('version', dependency.version)
+                            dependencyNode.appendNode('scope', "compile")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name 'plugin'
+            url uri('./plugin_component')
+        }
+    }
+}
