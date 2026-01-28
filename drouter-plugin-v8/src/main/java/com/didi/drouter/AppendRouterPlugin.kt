@@ -8,7 +8,7 @@ import com.didi.drouter.plugin.RouterSetting
 import com.didi.drouter.utils.SystemUtil
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.configurationcache.extensions.capitalized
+import org.gradle.internal.extensions.stdlib.capitalized
 
 class AppendRouterPlugin : Plugin<Project> {
     override fun apply(project: Project) {
