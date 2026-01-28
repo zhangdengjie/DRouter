@@ -48,15 +48,20 @@ abstract class AppendRouterTransform @Inject constructor(
     private fun assembleClassPath(): Queue<File> {
         val classpath = ConcurrentLinkedQueue<File>()
         androidComponents.sdkComponents.bootClasspath.get().forEach {
+            println("bootClasspath ${it.asFile.absolutePath}")
             classpath.add(it.asFile)
         }
+        // 包含本module的kotlin编译目录
         variant.compileClasspath.forEach { file ->
+            println("compileClasspath ${file.absolutePath}")
             classpath.add(file)
         }
-        // 自己的class地址
+        // 包含本module的javac编译目录
         val taskProvider: TaskProvider<JavaCompile> = project.tasks.named("compile${variant.name.capitalized()}JavaWithJavac",
             JavaCompile::class.java)
-        classpath.add(taskProvider.get().destinationDirectory.get().asFile)
+        val file = taskProvider.get().destinationDirectory.get().asFile
+        println("自己的class地址 ${file.absolutePath}")
+        classpath.add(file)
         return classpath
     }
 
