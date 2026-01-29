@@ -21,8 +21,12 @@ class AppendRouterPlugin : Plugin<Project> {
             androidComponents.onVariants { variant ->
                 val taskProvider = project.tasks.register(
                     "${variant.name}DRouterTask", AppendRouterTransform::class.java, androidComponents,variant)
+
+                val javaTaskName = "compile${variant.name.capitalized()}JavaWithJavac"
+                val javaTask = project.tasks.matching { it.name == javaTaskName }
                 taskProvider.configure {
-                    it.dependsOn(project.tasks.named("compile${variant.name.capitalized()}JavaWithJavac"))
+//                    it.dependsOn(project.tasks.named("compile${variant.name.capitalized()}JavaWithJavac"))
+                    it.dependsOn(javaTask)
                 }
                 // 新版本8.0.0以后,目前使用的是8.12.3 ScopedArtifacts.Scope.PROJECT 会自动将AppendRouterTransform添加到任务图中
                 // 编译依赖可以通过api获取,具体见AppendRouterTransform实现(可实现所有模块的路由表收集)[重要]
