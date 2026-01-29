@@ -13,5 +13,5 @@ ext {
     //maven 本地产物路径
     mavenPath = "${layout.buildDirectory.get().asFile.path}/libs/${project.name}-${project.version}.jar"
     //maven 发布版本号
-    mavenVersion = "0.0.1-SNAPSHOT"
+    mavenVersion = "1.0.0-SNAPSHOT"
 }
